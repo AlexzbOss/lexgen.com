@@ -1,0 +1,374 @@
+<html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LexGen - Card Checker</title>
+<link rel="icon" href="https://i.ibb.co/rfGnZ2d/LG-3-8-2024.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #3b82f6;
+    --secondary-color: #60a5fa;
+    --background-color: #0f172a;
+    --card-background: #1e293b;
+    --text-color: #e2e8f0;
+    --border-color: #334155;
+    --result-background: #1e293b;
+    --footer-background: #1e293b;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--text-color);
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .logo {
+    max-width: 650px;
+    margin-bottom: 30px;
+  }
+
+  .container {
+    display: flex;
+    background-color: var(--card-background);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px;
+  }
+
+  .input-section, .result-section {
+    flex: 1;
+    padding: 40px;
+  }
+
+  .result-section {
+    background-color: var(--result-background);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--secondary-color);
+  }
+
+  #result {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    display: none;
+  }
+
+  .copy-btn {
+    background-color: var(--secondary-color);
+    margin-top: 20px;
+    display: none;
+  }
+
+  .copy-btn:hover {
+    background-color: var(--primary-color);
+  }
+
+  .loader {
+    border: 5px solid var(--border-color);
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    display: none;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .footer {
+    background-color: var(--footer-background);
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .copyright {
+    margin-bottom: 15px;
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .social-icons a {
+    color: var(--text-color);
+    font-size: 24px;
+    transition: color 0.3s ease;
+  }
+
+  .social-icons a:hover {
+    color: var(--primary-color);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+
+    .input-section, .result-section {
+      padding: 30px;
+    }
+
+    .logo {
+      max-width: 250px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="main-content">
+    <img src="https://i.ibb.co/PwkTq5t/LEXGEN-CARD-CHECKER-3-8-2024-1.png" alt="CC Checker Pro Logo" class="logo">
+
+    <div class="container">
+      <div class="input-section">
+        <div class="input-group">
+          <label for="cardNumber">Número de tarjeta</label>
+          <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+        </div>
+        <div class="input-group">
+          <label for="expDate">Fecha de vencimiento</label>
+          <input type="text" id="expDate" placeholder="MM/YY" maxlength="5">
+        </div>
+        <div class="input-group">
+          <label for="cvv">CVV</label>
+          <input type="text" id="cvv" placeholder="123" maxlength="4">
+        </div>
+        <button onclick="checkCard()">Verificar Tarjeta</button>
+      </div>
+      <div class="result-section">
+        <div class="loader" id="loader"></div>
+        <div id="result"></div>
+        <button id="copyButton" class="copy-btn" onclick="copyResult()">Copiar Datos</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="copyright">
+      © 2024 LexGen by Alex Boss. Todos los derechos reservados.
+    </div>
+    <div class="social-icons">
+      <a href="https://www.youtube.com/@Alex.Two_" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.tiktok.com/@two.alex" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+      <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i></a>
+      <a href="#" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    function checkCard() {
+      const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+      const expDate = document.getElementById('expDate').value;
+      const cvv = document.getElementById('cvv').value;
+
+      // Mostrar el loader y ocultar el resultado anterior
+      document.getElementById('loader').style.display = 'block';
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('copyButton').style.display = 'none';
+
+      // Simular un tiempo de carga de 2 segundos
+      setTimeout(() => {
+        const startTime = performance.now();
+
+        const isValid = luhnCheck(cardNumber);
+        const isExpDateValid = checkExpDate(expDate);
+        const isCvvValid = checkCvv(cvv);
+
+        const binInfo = getBinInfo(cardNumber);
+        
+        const endTime = performance.now();
+        const timeTaken = (endTime - startTime).toFixed(2);
+
+        const result = formatResult({
+          cardNumber,
+          expDate,
+          cvv,
+          isValid: isValid && isExpDateValid && isCvvValid,
+          binInfo,
+          timeTaken
+        });
+
+        // Ocultar el loader y mostrar el resultado
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('result').innerText = result;
+        document.getElementById('copyButton').style.display = 'block';
+      }, 2000);
+    }
+
+    function formatResult(data) {
+      const separator = "∼∼∼∼∼∼∼∼∼∼∼∼∼∼∼";
+      const bin = data.cardNumber.substring(0, 6);
+      const responseMessage = data.isValid ? "Tarjeta Válida" : "Tarjeta Inválida";
+      return `
+ ━━━∙LexGen Card Checker∙━━━
+ [⊱] Número ≽ ${data.cardNumber}
+ [⊱] Fecha ≽  ${data.expDate}
+ [⊱] CVV ≽    ${data.cvv}
+ ${separator}
+ [⊱] Estado ≽ ${data.isValid ? "Válida ✅" : "Rechazada ❌"}
+ [⊱] Respuesta ≽ ${responseMessage}
+ ${separator}
+ [⊱] BIN Info ≽
+     ≭ BIN ≽    ${bin}
+     ≭ Marca ≽  ${data.binInfo.brand}
+ ${separator}
+ [⊱] Gateway LexGen
+ [⊱] Tiempo ≽  ${data.timeTaken} ms
+ [⊱] Checker by  Alex Boss
+ ${separator}`;
+    }
+
+    function luhnCheck(num) {
+      let arr = (num + '')
+        .split('')
+        .reverse()
+        .map(x => parseInt(x));
+      let lastDigit = arr.splice(0, 1)[0];
+      let sum = arr.reduce((acc, val, i) => (i % 2 !== 0 ? acc + val : acc + ((val * 2) % 9) || 9), 0);
+      sum += lastDigit;
+      return sum % 10 === 0;
+    }
+
+    function checkExpDate(expDate) {
+      const [month, year] = expDate.split('/');
+      const expiry = new Date(20 + year, month - 1);
+      return expiry > new Date();
+    }
+
+    function checkCvv(cvv) {
+      return /^[0-9]{3,4}$/.test(cvv);
+    }
+
+    function getBinInfo(cardNumber) {
+      const bin = cardNumber.substring(0, 6);
+      
+      const binData = {
+        "4": { brand: "Visa" },
+        "5": { brand: "Mastercard" },
+        "3": { brand: "American Express" },
+        "6": { brand: "Discover" }
+      };
+
+      const firstDigit = cardNumber[0];
+      return binData[firstDigit] || { brand: "Desconocido" };
+    }
+
+    function copyResult() {
+      const result = document.getElementById('result').innerText;
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = result;
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempTextArea);
+      alert('Datos copiados al portapapeles');
+    }
+
+    // Formateo automático del número de tarjeta
+    document.getElementById('cardNumber').addEventListener('input', function(e) {
+      let input = e.target;
+      let value = input.value.replace(/\D/g, '');
+      let formattedValue = '';
+      for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+          formattedValue += ' ';
+        }
+        formattedValue += value[i];
+      }
+      input.value = formattedValue;
+    });
+
+    // Formateo automático de la fecha de vencimiento
+    document.getElementById('expDate').addEventListener('input', function (e) {
+      let input = e.target;
+      let value = input.value.replace(/\D/g, '');
+      let formattedValue = '';
+
+      if (value.length > 0) {
+        if (value.length <= 2) {
+          formattedValue = value;
+        } else {
+          formattedValue = value.slice(0, 2) + '/' + value.slice(2, 4);
+        }
+      }
+
+      input.value = formattedValue;
+    });
+  </script>
+</body></html>

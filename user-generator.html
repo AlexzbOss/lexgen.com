@@ -1,0 +1,423 @@
+<html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LexGen - User Data Generator</title>
+<link rel="icon" href="https://i.ibb.co/rfGnZ2d/LG-3-8-2024.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<style>
+  :root {
+    --primary-color: #3b82f6;
+    --secondary-color: #60a5fa;
+    --background-color: #0f172a;
+    --card-background: #1e293b;
+    --text-color: #e2e8f0;
+    --border-color: #334155;
+    --result-background: #1e293b;
+    --footer-background: #1e293b;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--text-color);
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .logo {
+    max-width: 750px;
+    margin-bottom: 30px;
+  }
+
+  .container {
+    background-color: var(--card-background);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px;
+  }
+
+  .input-section {
+    padding: 40px;
+  }
+
+  .result-section {
+    background-color: var(--result-background);
+    border-top: 1px solid var(--border-color);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  select, input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+  }
+
+  select:focus, input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--secondary-color);
+  }
+
+  .user-card {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .user-card h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    text-align: center;
+  }
+
+  .user-card p {
+    margin: 5px 0;
+    width: 100%;
+  }
+
+  .user-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .footer {
+    background-color: var(--footer-background);
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .copyright {
+    margin-bottom: 15px;
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .social-icons a {
+    color: var(--text-color);
+    font-size: 24px;
+    transition: color 0.3s ease;
+  }
+
+  .social-icons a:hover {
+    color: var(--primary-color);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      margin: 10px;
+    }
+
+    .input-section, .result-section {
+      padding: 30px;
+    }
+
+    .logo {
+      max-width: 250px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="main-content">
+    <img src="https://i.ibb.co/GVrQv04/LEX-GEN-USER-DATA-GENERATOR-3-8-2024.png" alt="Random User Data Generator Logo" class="logo">
+
+    <div class="container">
+      <div class="input-section">
+        <div class="input-group">
+          <label for="gender">Género</label>
+          <select id="gender">
+            <option value="male">Hombre</option>
+            <option value="female">Mujer</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="country">País</label>
+          <select id="country">
+            <option value="US">Estados Unidos</option>
+            <option value="GB">Reino Unido</option>
+            <option value="FR">Francia</option>
+            <option value="DE">Alemania</option>
+            <option value="ES">España</option>
+            <option value="MX">México</option>
+            <option value="AU">Australia</option>
+            <option value="BR">Brasil</option>
+            <option value="CA">Canadá</option>
+            <option value="CH">Suiza</option>
+            <option value="IE">Irlanda</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="count">Cantidad de usuarios</label>
+          <input type="number" id="count" min="1" max="10" value="1">
+        </div>
+        <button onclick="generateUsers()">Generar Usuarios</button>
+      </div>
+      <div class="result-section" id="results">
+        <!-- Los resultados se mostrarán aquí -->
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="copyright">
+      © 2024 LexGen by Alex Boss. Todos los derechos reservados.
+    </div>
+    <div class="social-icons">
+      <a href="https://www.youtube.com/@Alex.Two_" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.tiktok.com/@two.alex" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+      <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i></a>
+      <a href="#" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    const countryData = {
+      US: {
+        phoneFormat: "(###) ###-####",
+        cellFormat: "(###) ###-####",
+        postcodeFormat: "#####",
+        idFormat: "###-##-####",
+        idName: "SSN",
+        emailDomains: ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"],
+        streetTypes: ["St", "Ave", "Blvd", "Rd", "Ln"]
+      },
+      GB: {
+        phoneFormat: "0#### ######",
+        cellFormat: "07### ######",
+        postcodeFormat: "?# #??",
+        idFormat: "?? ## ## ## ?",
+        idName: "National Insurance number",
+        emailDomains: ["gmail.com", "yahoo.co.uk", "hotmail.co.uk", "outlook.com"],
+        streetTypes: ["St", "Rd", "Ave", "Ln", "Close"]
+      },
+      FR: {
+        phoneFormat: "0# ## ## ## ##",
+        cellFormat: "0# ## ## ## ##",
+        postcodeFormat: "#####",
+        idFormat: "# ## ## ## ### ###",
+        idName: "Numéro de sécurité sociale",
+        emailDomains: ["gmail.com", "yahoo.fr", "hotmail.fr", "orange.fr"],
+        streetTypes: ["Rue", "Avenue", "Boulevard", "Place", "Allée"]
+      },
+      DE: {
+        phoneFormat: "0#### ######",
+        cellFormat: "01## ########",
+        postcodeFormat: "#####",
+        idFormat: "## ## ## ## ###",
+        idName: "Steueridentifikationsnummer",
+        emailDomains: ["gmail.com", "yahoo.de", "hotmail.de", "web.de"],
+        streetTypes: ["Straße", "Weg", "Platz", "Allee", "Gasse"]
+      },
+      ES: {
+        phoneFormat: "### ### ###",
+        cellFormat: "### ### ###",
+        postcodeFormat: "#####",
+        idFormat: "########?",
+        idName: "DNI",
+        emailDomains: ["gmail.com", "yahoo.es", "hotmail.es", "outlook.es"],
+        streetTypes: ["Calle", "Avenida", "Paseo", "Plaza", "Camino"]
+      },
+      MX: {
+        phoneFormat: "(##) #### ####",
+        cellFormat: "## ## #### ####",
+        postcodeFormat: "#####",
+        idFormat: "???? ######",
+        idName: "CURP",
+        emailDomains: ["gmail.com", "yahoo.com.mx", "hotmail.com", "outlook.com"],
+        streetTypes: ["Calle", "Avenida", "Boulevard", "Calzada", "Paseo"]
+      },
+      AU: {
+        phoneFormat: "0# #### ####",
+        cellFormat: "04## ### ###",
+        postcodeFormat: "####",
+        idFormat: "### ### ###",
+        idName: "Tax File Number",
+        emailDomains: ["gmail.com", "yahoo.com.au", "hotmail.com", "outlook.com"],
+        streetTypes: ["St", "Rd", "Ave", "Cres", "Dr"]
+      },
+      BR: {
+        phoneFormat: "(##) ####-####",
+        cellFormat: "(##) #####-####",
+        postcodeFormat: "#####-###",
+        idFormat: "###.###.###-##",
+        idName: "CPF",
+        emailDomains: ["gmail.com", "yahoo.com.br", "hotmail.com", "outlook.com"],
+        streetTypes: ["Rua", "Avenida", "Travessa", "Alameda", "Praça"]
+      },
+      CA: {
+        phoneFormat: "(###) ###-####",
+        cellFormat: "(###) ###-####",
+        postcodeFormat: "??? ???",
+        idFormat: "### ### ###",
+        idName: "Social Insurance Number",
+        emailDomains: ["gmail.com", "yahoo.ca", "hotmail.com", "outlook.com"],
+        streetTypes: ["St", "Ave", "Blvd", "Rd", "Cres"]
+      },
+      CH: {
+        phoneFormat: "0## ### ## ##",
+        cellFormat: "07# ### ## ##",
+        postcodeFormat: "####",
+        idFormat: "756.####.####.##",
+        idName: "AHV Number",
+        emailDomains: ["gmail.com", "bluewin.ch", "hotmail.com", "outlook.com"],
+        streetTypes: ["Strasse", "Weg", "Platz", "Gasse", "Allee"]
+      },
+      IE: {
+        phoneFormat: "0# ### ####",
+        cellFormat: "08# ### ####",
+        postcodeFormat: "??? ????",
+        idFormat: "#### ### ???",
+        idName: "PPS Number",
+        emailDomains: ["gmail.com", "yahoo.ie", "hotmail.com", "outlook.com"],
+        streetTypes: ["St", "Rd", "Ave", "Green", "Park"]
+      }
+    };
+
+    function formatPhoneNumber(number, format) {
+      let formatted = format;
+      number.toString().split('').forEach(digit => {
+        formatted = formatted.replace('#', digit);
+      });
+      return formatted;
+    }
+
+    function formatPostcode(postcode, format) {
+      let formatted = format;
+      postcode.toString().split('').forEach(char => {
+        formatted = formatted.replace(char.match(/[0-9]/) ? '#' : '?', char);
+      });
+      return formatted;
+    }
+
+    function generateID(format) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let id = format;
+      for (let i = 0; i < format.length; i++) {
+        if (format[i] === '#') {
+          id = id.replace('#', Math.floor(Math.random() * 10));
+        } else if (format[i] === '?') {
+          id = id.replace('?', chars[Math.floor(Math.random() * 36)]);
+        }
+      }
+      return id;
+    }
+
+    function generateEmail(firstName, lastName, country) {
+      const domains = countryData[country].emailDomains;
+      const domain = domains[Math.floor(Math.random() * domains.length)];
+      return `${firstName.toLowerCase()}.${lastName.toLowerCase()}@${domain}`;
+    }
+
+    function generateAddress(streetName, streetNumber, city, state, postcode, country) {
+      const streetTypes = countryData[country].streetTypes;
+      const streetType = streetTypes[Math.floor(Math.random() * streetTypes.length)];
+      return `${streetNumber} ${streetName} ${streetType}, ${city}, ${state} ${formatPostcode(postcode, countryData[country].postcodeFormat)}`;
+    }
+
+    async function generateUsers() {
+      const gender = document.getElementById('gender').value;
+      const country = document.getElementById('country').value;
+      const count = document.getElementById('count').value;
+
+      const resultsContainer = document.getElementById('results');
+      resultsContainer.innerHTML = '<p>Generando usuarios...</p>';
+
+      try {
+        const response = await fetch(`https://randomuser.me/api/?gender=${gender}&nat=${country}&results=${count}`);
+        const data = await response.json();
+
+        resultsContainer.innerHTML = '';
+
+        data.results.forEach(user => {
+          const countryInfo = countryData[country];
+          const userCard = document.createElement('div');
+          userCard.className = 'user-card';
+          userCard.innerHTML = `
+            <img src="${user.picture.large}" alt="Foto de ${user.name.first} ${user.name.last}" class="user-photo">
+            <h3>${user.name.first} ${user.name.last}</h3>
+            <p><strong>Username:</strong> ${user.login.username}</p>
+            <p><strong>Password:</strong> ${user.login.password}</p>
+            <p><strong>Email:</strong> ${generateEmail(user.name.first, user.name.last, country)}</p>
+            <p><strong>Gender:</strong> ${user.gender}</p>
+            <p><strong>Date of Birth:</strong> ${new Date(user.dob.date).toLocaleDateString()}</p>
+            <p><strong>Phone:</strong> ${formatPhoneNumber(user.phone.replace(/\D/g,''), countryInfo.phoneFormat)}</p>
+            <p><strong>Cell:</strong> ${formatPhoneNumber(user.cell.replace(/\D/g,''), countryInfo.cellFormat)}</p>
+            <p><strong>Address:</strong> ${generateAddress(user.location.street.name, user.location.street.number, user.location.city, user.location.state, user.location.postcode, country)}</p>
+            <p><strong>Country:</strong> ${user.location.country}</p>
+            <p><strong>${countryInfo.idName}:</strong> ${generateID(countryInfo.idFormat)}</p>
+          `;
+          resultsContainer.appendChild(userCard);
+        });
+      } catch (error) {
+        resultsContainer.innerHTML = '<p>Error al generar usuarios. Por favor, intente nuevamente.</p>';
+        console.error('Error:', error);
+      }
+    }
+  </script>
+</body></html>

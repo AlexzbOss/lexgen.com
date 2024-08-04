@@ -1,0 +1,464 @@
+<html><head>
+<title>LexGen - Card Generator</title>
+<link rel="icon" href="https://i.ibb.co/rfGnZ2d/LG-3-8-2024.png" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: #1e293b;
+        --text-color: #e2e8f0;
+        --input-bg: #334155;
+        --input-border: #475569;
+        --button-bg: #3b82f6;
+        --button-hover: #2563eb;
+        --card-border: #475569;
+        --accent-color: #60a5fa;
+        --footer-bg: #1e293b;
+        --scrollbar-bg: #2d3748;
+        --scrollbar-thumb: #4a5568;
+        --scrollbar-thumb-hover: #718096;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        background-color: var(--card-bg);
+        padding: 1rem;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+        max-width: 560px;
+        height: auto;
+    }
+
+    main {
+        display: flex;
+        flex: 1;
+        padding: 2rem;
+        gap: 2rem;
+    }
+
+    .generator {
+        flex: 1;
+        background-color: var(--card-bg);
+        border-radius: 0.5rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-group {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--input-border);
+        border-radius: 0.25rem;
+        font-size: 1rem;
+        background-color: var(--input-bg);
+        color: var(--text-color);
+        transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+    }
+
+    button {
+        background-color: var(--button-bg);
+        color: white;
+        border: none;
+        padding: 0.75rem 1rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        font-size: 1rem;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: var(--button-hover);
+    }
+
+    .results-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .results {
+        flex: 1;
+        background-color: var(--card-bg);
+        border-radius: 0.5rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        max-height: calc(100vh - 10rem);
+        scrollbar-width: thin;
+        scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+    }
+
+    .results::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    .results::-webkit-scrollbar-track {
+        background: var(--scrollbar-bg);
+        border-radius: 6px;
+    }
+
+    .results::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-thumb);
+        border-radius: 6px;
+        border: 3px solid var(--scrollbar-bg);
+    }
+
+    .results::-webkit-scrollbar-thumb:hover {
+        background-color: var(--scrollbar-thumb-hover);
+    }
+
+    .card {
+        background-color: var(--input-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-number {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: var(--accent-color);
+    }
+
+    .card-details {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.875rem;
+    }
+
+    .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top: 4px solid var(--accent-color);
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    footer {
+        background-color: var(--footer-bg);
+        color: var(--text-color);
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .social-icons {
+        margin-top: 0.5rem;
+    }
+
+    .social-icons a {
+        color: var(--text-color);
+        font-size: 1.5rem;
+        margin: 0 0.5rem;
+        transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+        color: var(--accent-color);
+    }
+
+    #saveButton {
+        margin-top: 1rem;
+        background-color: var(--accent-color);
+    }
+
+    #saveButton:hover {
+        background-color: #4b8bf4;
+    }
+
+    @media (max-width: 768px) {
+        main {
+            flex-direction: column;
+        }
+    }
+</style>
+</head>
+<body>
+<header>
+    <img src="https://i.ibb.co/nMZC1q3/LEXGEN-CARD-GENERATOR-3-8-2024.png" alt="Credit Card Generator Logo" class="logo">
+</header>
+<main>
+    <section class="generator">
+        <div class="input-group">
+            <label for="bin">BIN</label>
+            <input type="text" id="bin" placeholder="Enter BIN (up to 16 digits)" maxlength="16">
+        </div>
+        <div class="input-group">
+            <label for="quantity">Cantidad</label>
+            <input type="number" id="quantity" value="10" min="1" max="100">
+        </div>
+        <div class="input-group">
+            <label for="month">Mes</label>
+            <select id="month">
+                <option value="rnd">Random</option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="year">Año</label>
+            <select id="year">
+                <option value="rnd">Random</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="cvv">CVV</label>
+            <select id="cvv">
+                <option value="rnd">Random</option>
+                <option value="3">3 digits</option>
+                <option value="4">4 digits</option>
+            </select>
+        </div>
+        <button onclick="generateCards()">Generar</button>
+    </section>
+    <div class="results-container">
+        <section class="results" id="result">
+            <!-- Loading spinner will be inserted here -->
+        </section>
+        <button id="saveButton" onclick="saveAsTxt()" style="display: none;">Guardar en TXT</button>
+    </div>
+</main>
+<footer>
+    <div>© 2024 LexGen by Alex Boss. Todos los derechos reservados.</div>
+    <div class="social-icons">
+        <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+        <a href="https://example.com" target="_blank"><i class="fas fa-globe"></i></a>
+    </div>
+</footer>
+
+<script>
+let generatedCards = [];
+
+function autocompleteBIN() {
+    const binInput = document.getElementById('bin');
+    let binValue = binInput.value.replace(/x/gi, '');
+    if (binValue.length < 16) {
+        binInput.value = binValue + 'x'.repeat(16 - binValue.length);
+    }
+}
+
+document.getElementById('bin').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9x]/g, '');
+});
+
+document.getElementById('bin').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        autocompleteBIN();
+    }
+});
+
+document.addEventListener('click', function(e) {
+    if (e.target.id !== 'bin') {
+        autocompleteBIN();
+    }
+});
+
+function generateCards() {
+    const bin = document.getElementById('bin').value.replace(/x/gi, '');
+    const quantity = document.getElementById('quantity').value;
+    const month = document.getElementById('month').value;
+    const year = document.getElementById('year').value;
+    const cvv = document.getElementById('cvv').value;
+
+    // Validation
+    if (bin.length < 6 || bin.length > 16 || isNaN(bin)) {
+        alert('Please enter a valid BIN between 6 and 16 digits.');
+        return;
+    }
+
+    if (quantity < 1 || quantity > 100) {
+        alert('Please enter a quantity between 1 and 100.');
+        return;
+    }
+
+    // Show loading spinner
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+    // Hide the save button while generating
+    document.getElementById('saveButton').style.display = 'none';
+
+    // Generate cards after a 2-second delay
+    setTimeout(() => {
+        generatedCards = [];
+        for (let i = 0; i < quantity; i++) {
+            const card = generateValidCard(bin, month, year, cvv);
+            generatedCards.push(card);
+        }
+        displayResults(generatedCards);
+        // Show the save button after generation
+        document.getElementById('saveButton').style.display = 'block';
+    }, 2000);
+}
+
+function generateValidCard(bin, month, year, cvv) {
+    const remainingDigits = 15 - bin.length;
+    let cardNumber;
+    do {
+        const randomDigits = Math.floor(Math.random() * Math.pow(10, remainingDigits)).toString().padStart(remainingDigits, '0');
+        cardNumber = bin + randomDigits;
+        cardNumber += getLuhnCheckDigit(cardNumber);
+    } while (!isValidLuhn(cardNumber));
+
+    return {
+        number: cardNumber,
+        month: month === 'rnd' ? String(Math.floor(Math.random() * 12) + 1).padStart(2, '0') : month,
+        year: year === 'rnd' ? String(Math.floor(Math.random() * 6) + 2023) : year,
+        cvv: cvv === 'rnd' ? (Math.floor(Math.random() * (cvv === '3' ? 1000 : 10000))).toString().padStart(cvv === '3' ? 3 : 4, '0') : (Math.floor(Math.random() * (cvv === '3' ? 1000 : 10000))).toString().padStart(cvv === '3' ? 3 : 4, '0')
+    };
+}
+
+function getLuhnCheckDigit(number) {
+    let sum = 0;
+    let isEven = true;
+
+    for (let i = number.length - 1; i >= 0; i--) {
+        let digit = parseInt(number.charAt(i), 10);
+
+        if (isEven) {
+            digit *= 2;
+            if (digit > 9) {
+                digit -= 9;
+            }
+        }
+
+        sum += digit;
+        isEven = !isEven;
+    }
+
+    return ((10 - (sum % 10)) % 10).toString();
+}
+
+function isValidLuhn(number) {
+    let sum = 0;
+    let isEven = false;
+
+    for (let i = number.length - 1; i >= 0; i--) {
+        let digit = parseInt(number.charAt(i), 10);
+
+        if (isEven) {
+            digit *= 2;
+            if (digit > 9) {
+                digit -= 9;
+            }
+        }
+
+        sum += digit;
+        isEven = !isEven;
+    }
+
+    return sum % 10 === 0;
+}
+
+function displayResults(cards) {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '';
+    cards.forEach(card => {
+        resultDiv.innerHTML += `
+            <div class="card">
+                <div class="card-number">${formatCardNumber(card.number)}</div>
+                <div class="card-details">
+                    <span>Expiry: ${card.month}/${card.year}</span>
+                    <span>CVV: ${card.cvv}</span>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function formatCardNumber(number) {
+    return number.replace(/(\d{4})(?=\d)/g, '$1 ');
+}
+
+function saveAsTxt() {
+    let content = '';
+    generatedCards.forEach(card => {
+        content += `${card.number}|${card.month}|${card.year}|${card.cvv}\n`;
+    });
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Tarjetas Generadas by LEXGEN.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+</script>
+</body>
+</html>
